@@ -7,7 +7,15 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import WallPaperManager from 'react-native-wallpaper-manager';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -18,12 +26,38 @@ const instructions = Platform.select({
 
 type Props = {};
 export default class App extends Component<Props> {
+  setAsWallpaper(image) {
+    WallPaperManager.setWallpaper(image, (response) => {
+      if(response.status == 'success') alert('success')
+    })
+  }
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <View style={{padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+          <View style={{flex: 1}}>
+            <Image source={require('./assets/flower.jpeg')} style={{height: 200, width: 200}} resizeMode="contain" />
+          </View>
+          <View style={{flex: 1, alignItems: 'center'}}>
+            <TouchableOpacity
+              style={{backgroundColor: 'powderblue', padding: 5}}
+              onPress={() => this.setAsWallpaper(require('./assets/flower.jpeg'))} >
+                <Text>Set as wallpaper</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={{padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+          <View style={{flex: 1}}>
+            <Image source={require('./assets/sunflower.jpeg')} style={{height: 200, width: 200}} resizeMode="contain" />
+          </View>
+          <View style={{flex: 1, alignItems: 'center'}}>
+            <TouchableOpacity
+              style={{backgroundColor: 'powderblue', padding: 5}}
+              onPress={() => this.setAsWallpaper(require('./assets/sunflower.jpeg'))} >
+                <Text>Set as wallpaper</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     );
   }
